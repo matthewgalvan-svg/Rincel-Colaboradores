@@ -41,6 +41,16 @@ const EMPTY: FormState = { name: "", email: "", phone: "", recipient: "", postal
 const FORM_KEY = "rincel.checkout.form";
 const KEY_KEY = "rincel.checkout.key";
 
+function loadSavedForm(): FormState {
+  if (typeof window === "undefined") return EMPTY;
+  try {
+    const saved = sessionStorage.getItem(FORM_KEY);
+    return saved ? { ...EMPTY, ...(JSON.parse(saved) as Partial<FormState>), acceptTerms: false } : EMPTY;
+  } catch {
+    return EMPTY;
+  }
+}
+
 const FIELD_MAP: Record<string, keyof FormState> = {
   "customer.name": "name",
   "customer.email": "email",
@@ -66,9 +76,10 @@ function newKey() {
 export function CheckoutForm({ paymentsReady, shippingMode, manualShippingDescription, contactUrl }: { paymentsReady: boolean; shippingMode: "none" | "manual" | "simulated" | "provider"; manualShippingDescription: string | null; contactUrl: string }) {
   const { lines, ready } = useCart();
   const { data: cart, loading } = usePricedCart();
-  const [form, setForm] = useState<FormState>(EMPTY);
+  // Restaura datos capturados (se conservan si hay error o se recarga la página).
+  const [form, setForm] = useState<FormState>(loadSavedForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
-  const [quotes, setQuotes] = useState<QuoteOption[] | null>(null);
+  const [rawQuotes, setQuotes] = useState<QuoteOption[] | null>(null);
   const [quoteId, setQuoteId] = useState<string | null>(null);
   const [quoting, setQuoting] = useState(false);
   const [quoteError, setQuoteError] = useState<string | null>(null);
@@ -76,20 +87,7 @@ export function CheckoutForm({ paymentsReady, shippingMode, manualShippingDescri
   const [banner, setBanner] = useState<{ kind: "error" | "warning"; text: string } | null>(null);
   const [quotedFor, setQuotedFor] = useState<string | null>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
-  const [restored, setRestored] = useState(false);
-
-  // Restaura datos capturados (se conservan si hay error o se recarga la página).
   useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem(FORM_KEY);
-      if (saved) setForm({ ...EMPTY, ...(JSON.parse(saved) as Partial<FormState>), acceptTerms: false });
-    } catch {
-      /* ignorar */
-    }
-    setRestored(true);
-  }, []);
-  useEffect(() => {
-    if (!restored) return;
     try {
       const { acceptTerms: _ignored, ...rest } = form;
       void _ignored;
@@ -97,7 +95,7 @@ export function CheckoutForm({ paymentsReady, shippingMode, manualShippingDescri
     } catch {
       /* ignorar */
     }
-  }, [form, restored]);
+  }, [form]);
 
   useEffect(() => {
     if (ready && lines.length) track("begin_checkout");
@@ -105,12 +103,7 @@ export function CheckoutForm({ paymentsReady, shippingMode, manualShippingDescri
 
   // Si cambia el carrito o el CP, la cotización anterior deja de servir.
   const quoteFingerprint = `${cart?.shippingCartHash ?? ""}|${form.postalCode}`;
-  useEffect(() => {
-    if (quotedFor && quotedFor !== quoteFingerprint) {
-      setQuotes(null);
-      setQuoteId(null);
-    }
-  }, [quoteFingerprint, quotedFor]);
+  const quotes = quotedFor === quoteFingerprint ? rawQuotes : null;
 
   const selectedQuote = quotes?.find((q) => q.id === quoteId) ?? null;
   const shippingCents = cart?.requiresShipping ? (selectedQuote?.costCents ?? null) : 0;

@@ -28,7 +28,7 @@ export function ActionForm({
   return (
     <form
       action={formAction}
-      className={`grid gap-3 ${className}`}
+      className={`grid content-start gap-3 ${className}`}
       onSubmit={(e) => {
         if (confirm && !window.confirm(confirm)) e.preventDefault();
       }}

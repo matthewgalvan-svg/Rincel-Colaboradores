@@ -28,36 +28,29 @@ export interface PricedCartView {
   issues: { productId: string; variantCode?: string; code: string; message: string }[];
 }
 
+const EMPTY_VIEW: PricedCartView = { lines: [], subtotalCents: 0, requiresShipping: false, hasDigital: false, shippingCartHash: null, issues: [] };
+
 /** Totales calculados por el servidor para el carrito local. */
 export function usePricedCart() {
   const { lines, ready } = useCart();
-  const [data, setData] = useState<PricedCartView | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const key = JSON.stringify(lines);
+  const [result, setResult] = useState<{ key: string; data: PricedCartView | null; error: string | null } | null>(null);
 
   useEffect(() => {
-    if (!ready) return;
-    if (!lines.length) {
-      setData({ lines: [], subtotalCents: 0, requiresShipping: false, hasDigital: false, shippingCartHash: null, issues: [] });
-      setLoading(false);
-      return;
-    }
+    if (!ready || !lines.length) return;
     const ctrl = new AbortController();
-    setLoading(true);
     fetch("/api/carrito", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lines }), signal: ctrl.signal })
       .then((r) => r.json())
-      .then((d: PricedCartView & { ok: boolean }) => {
-        setData(d);
-        setError(null);
-      })
+      .then((d: PricedCartView) => setResult({ key, data: d, error: null }))
       .catch((e: unknown) => {
-        if ((e as { name?: string }).name !== "AbortError") setError("No pudimos actualizar tu carrito. Revisa tu conexión.");
-      })
-      .finally(() => setLoading(false));
+        if ((e as { name?: string }).name !== "AbortError") setResult((prev) => ({ key, data: prev?.data ?? null, error: "No pudimos actualizar tu carrito. Revisa tu conexión." }));
+      });
     return () => ctrl.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, ready]);
 
-  return { data, loading: loading || !ready, error };
+  if (!ready) return { data: null, loading: true, error: null };
+  if (!lines.length) return { data: EMPTY_VIEW, loading: false, error: null };
+  const fresh = result?.key === key;
+  return { data: result?.data ?? null, loading: !fresh, error: fresh ? result.error : null };
 }

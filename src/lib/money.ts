@@ -1,11 +1,11 @@
 /** Utilidades de dinero. Todo importe se maneja en centavos enteros de MXN. */
 
-const mxn = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const mxnWhole = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", minimumFractionDigits: 0, maximumFractionDigits: 0 });
 const mxnFixed = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-/** $1,050 (sin decimales cuando son cero). */
+/** $1,050 cuando no hay centavos; $230.50 cuando los hay (nunca $230.5). */
 export function formatMXN(cents: number): string {
-  return mxn.format(cents / 100);
+  return cents % 100 === 0 ? mxnWhole.format(cents / 100) : mxnFixed.format(cents / 100);
 }
 
 /** $1,050.00 — para comprobantes y tablas. */

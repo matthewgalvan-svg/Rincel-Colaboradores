@@ -14,7 +14,8 @@ import { sha256Hex } from "@/lib/security/tokens";
  * compatible manteniendo esta misma interfaz.
  */
 function baseDir() {
-  return path.resolve(process.env.STORAGE_DIR ?? "./storage");
+  // El directorio es configurable en tiempo de ejecución: se excluye del rastreo de archivos del build.
+  return path.resolve(/*turbopackIgnore: true*/ process.env.STORAGE_DIR ?? "./storage");
 }
 
 const ALLOWED_MIME = new Set(["application/pdf", "image/png", "image/jpeg", "image/webp"]);
@@ -37,9 +38,9 @@ export async function saveFile(
   if (!sniffed || !ALLOWED_MIME.has(sniffed)) throw new Error("Tipo de archivo no permitido (PDF, PNG, JPG o WebP).");
   const ext = { "application/pdf": "pdf", "image/png": "png", "image/jpeg": "jpg", "image/webp": "webp" }[sniffed];
   const key = `${input.isPrivate ? "private" : "public"}/${input.kind}/${randomUUID()}.${ext}`;
-  const full = path.join(baseDir(), key);
-  await mkdir(path.dirname(full), { recursive: true });
-  await writeFile(full, input.data, { mode: 0o600 });
+  const full = path.join(/*turbopackIgnore: true*/ baseDir(), key);
+  await mkdir(/*turbopackIgnore: true*/ path.dirname(full), { recursive: true });
+  await writeFile(/*turbopackIgnore: true*/ full, input.data, { mode: 0o600 });
   const safeName = input.filename.replace(/[^\w.\-áéíóúñÁÉÍÓÚÑ ]+/g, "_").slice(0, 120) || `archivo.${ext}`;
   const [row] = await tx
     .insert(files)
@@ -61,9 +62,9 @@ export async function saveFile(
 export async function readStoredFile(fileId: string, tx: DbOrTx = db) {
   const [row] = await tx.select().from(files).where(eq(files.id, fileId)).limit(1);
   if (!row) return null;
-  const full = path.join(baseDir(), row.storageKey);
+  const full = path.join(/*turbopackIgnore: true*/ baseDir(), row.storageKey);
   // Defensa adicional contra rutas manipuladas.
   if (!full.startsWith(baseDir() + path.sep)) return null;
-  const data = await readFile(full);
+  const data = await readFile(/*turbopackIgnore: true*/ full);
   return { file: row, data };
 }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LogoLockup } from "@/components/brand/Logo";
 import { useCart } from "@/components/cart/CartProvider";
 import { Icon } from "@/components/ui/Icon";
@@ -21,7 +21,12 @@ export function Header() {
   const { count, ready } = useCart();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  useEffect(() => setOpen(false), [pathname]);
+  // Cierra el menú móvil al cambiar de página (ajuste de estado durante el render).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
 
   return (
     <header className="sticky top-0 z-30 print:hidden border-b border-borde/60 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">

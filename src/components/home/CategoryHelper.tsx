@@ -22,6 +22,20 @@ const RESULTS: Record<string, Result> = {
   vender: { title: "Empieza con el kit colaborador", text: "12 chips Rincel, volantes de apoyo y soporte para activar líneas.", href: "/vende-rincel", cta: "Empezar a vender Rincel" },
 };
 
+function Option({ k, icon, label, hint, onChoose }: { k: string; icon: IconName; label: string; hint: string; onChoose: (k: string) => void }) {
+  return (
+    <button type="button" onClick={() => onChoose(k)} className="flex min-h-16 w-full items-center gap-3 rounded-2xl border-2 border-borde bg-white px-4 py-3 text-left transition-colors hover:border-morado hover:bg-celeste-50">
+      <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-celeste text-morado">
+        <Icon name={icon} />
+      </span>
+      <span>
+        <span className="block font-extrabold text-marino">{label}</span>
+        <span className="block text-sm text-tinta-suave">{hint}</span>
+      </span>
+    </button>
+  );
+}
+
 /** Ayudante breve (1–2 preguntas) para elegir categoría. */
 export function CategoryHelper() {
   const [step, setStep] = useState<Step>("inicio");
@@ -37,18 +51,6 @@ export function CategoryHelper() {
     setStep("resultado");
   };
 
-  const Option = ({ k, icon, label, hint }: { k: string; icon: IconName; label: string; hint: string }) => (
-    <button type="button" onClick={() => choose(k)} className="flex min-h-16 w-full items-center gap-3 rounded-2xl border-2 border-borde bg-white px-4 py-3 text-left transition-colors hover:border-morado hover:bg-celeste-50">
-      <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-celeste text-morado">
-        <Icon name={icon} />
-      </span>
-      <span>
-        <span className="block font-extrabold text-marino">{label}</span>
-        <span className="block text-sm text-tinta-suave">{hint}</span>
-      </span>
-    </button>
-  );
-
   return (
     <div className="card overflow-hidden">
       <div className="flex items-center gap-3 border-b border-borde/60 bg-celeste-50 px-5 py-3">
@@ -63,10 +65,10 @@ export function CategoryHelper() {
           <fieldset>
             <legend className="mb-3 text-lg font-extrabold text-marino">¿Qué necesitas?</legend>
             <div className="grid gap-2 sm:grid-cols-2">
-              <Option k="conservar" icon="swap" label="Conservar mi número" hint="Me cambio a Rincel" />
-              <Option k="nueva" icon="phone" label="Un número nuevo" hint="Quiero estrenar línea" />
-              <Option k="internet" icon="wifi" label="Solo internet" hint="Para tableta, módem o compartir" />
-              <Option k="vender" icon="store" label="Vender Rincel" hint="Quiero ser colaborador" />
+              <Option onChoose={choose} k="conservar" icon="swap" label="Conservar mi número" hint="Me cambio a Rincel" />
+              <Option onChoose={choose} k="nueva" icon="phone" label="Un número nuevo" hint="Quiero estrenar línea" />
+              <Option onChoose={choose} k="internet" icon="wifi" label="Solo internet" hint="Para tableta, módem o compartir" />
+              <Option onChoose={choose} k="vender" icon="store" label="Vender Rincel" hint="Quiero ser colaborador" />
             </div>
           </fieldset>
         ) : null}
@@ -74,8 +76,8 @@ export function CategoryHelper() {
           <fieldset>
             <legend className="mb-3 text-lg font-extrabold text-marino">¿Cómo lo vas a usar?</legend>
             <div className="grid gap-2 sm:grid-cols-2">
-              <Option k="chip" icon="chip" label="En un dispositivo que ya tengo" hint="Chip de solo datos" />
-              <Option k="mifi" icon="wifi" label="Compartir por Wi-Fi" hint="Necesito el equipo MiFi" />
+              <Option onChoose={choose} k="chip" icon="chip" label="En un dispositivo que ya tengo" hint="Chip de solo datos" />
+              <Option onChoose={choose} k="mifi" icon="wifi" label="Compartir por Wi-Fi" hint="Necesito el equipo MiFi" />
             </div>
             <button type="button" className="btn-ghost mt-2 px-0" onClick={() => setStep("inicio")}>
               ← Volver

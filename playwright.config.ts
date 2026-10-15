@@ -10,6 +10,7 @@ const executablePath = process.env.PLAYWRIGHT_CHROMIUM_PATH || undefined;
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  globalSetup: "./tests/e2e/global-setup.ts",
   timeout: 120_000,
   expect: { timeout: 20_000 },
   fullyParallel: false,
@@ -37,6 +38,7 @@ export default defineConfig({
       PAYMENT_PROVIDER: "simulated",
       SHIPPING_PROVIDER: "simulated",
       STORAGE_DIR: "./storage-test",
+      AUTH_RATE_LIMIT_DISABLED: "1",
     },
   },
 });

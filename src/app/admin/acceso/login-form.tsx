@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/lib/auth/client";
 
@@ -8,6 +9,7 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const router = useRouter();
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +21,8 @@ export function LoginForm() {
       setBusy(false);
       return;
     }
-    window.location.assign("/admin");
+    router.replace("/admin");
+    router.refresh();
   };
 
   return (

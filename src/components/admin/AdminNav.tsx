@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/lib/auth/client";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -15,6 +15,7 @@ export interface NavItem {
 
 export function AdminNav({ items, user }: { items: NavItem[]; user: { name: string; email: string; role: string } }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const isActive = (href: string) => (href === "/admin" ? pathname === "/admin" : pathname.startsWith(href));
   const nav = (
@@ -52,7 +53,8 @@ export function AdminNav({ items, user }: { items: NavItem[]; user: { name: stri
             className="mt-3 text-sm font-bold text-morado underline"
             onClick={async () => {
               await authClient.signOut();
-              window.location.assign("/admin/acceso");
+              router.replace("/admin/acceso");
+              router.refresh();
             }}
           >
             Cerrar sesión

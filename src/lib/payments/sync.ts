@@ -1,5 +1,5 @@
 import "server-only";
-import { and, eq, or } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 import { db, type DbOrTx } from "@/db";
 import { activations, orderEvents, orderItems, orders, payments, shipments, shippingQuotes } from "@/db/schema";
 import { forwardPurchase, recordEvent } from "@/lib/analytics/server";

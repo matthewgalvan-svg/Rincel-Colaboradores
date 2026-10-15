@@ -46,7 +46,8 @@ export const auth = betterAuth({
     updateAge: 60 * 60, // renueva cada hora de uso
   },
   rateLimit: {
-    enabled: process.env.NODE_ENV !== "test",
+    // Límite de intentos persistente en PostgreSQL. Solo puede desactivarse fuera de producción (pruebas e2e).
+    enabled: process.env.NODE_ENV !== "test" && !(process.env.APP_ENV !== "production" && process.env.AUTH_RATE_LIMIT_DISABLED === "1"),
     storage: "database",
     window: 60,
     max: 60,

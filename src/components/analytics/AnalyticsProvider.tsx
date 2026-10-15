@@ -1,11 +1,28 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { captureAttribution, track } from "./track";
 
 const CONSENT_KEY = "rincel.consentimiento";
+type Consent = "granted" | "denied" | null;
+const consentListeners = new Set<() => void>();
+
+function readConsent(): Consent {
+  try {
+    const v = localStorage.getItem(CONSENT_KEY);
+    return v === "granted" || v === "denied" ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+function subscribeConsent(cb: () => void) {
+  consentListeners.add(cb);
+  return () => consentListeners.delete(cb);
+}
 
 /**
  * Registra vistas de página propias y, solo si el negocio configuró GA4 o
@@ -15,16 +32,11 @@ const CONSENT_KEY = "rincel.consentimiento";
 export function AnalyticsProvider({ ga4Id, metaPixelId }: { ga4Id: string | null; metaPixelId: string | null }) {
   const pathname = usePathname();
   const external = Boolean(ga4Id || metaPixelId);
-  const [consent, setConsent] = useState<"granted" | "denied" | null>(null);
+  // En el servidor y al hidratar no se conoce la preferencia: el aviso aparece después.
+  const consent = useSyncExternalStore(subscribeConsent, readConsent, () => "denied" as Consent);
 
   useEffect(() => {
     captureAttribution();
-    try {
-      const v = localStorage.getItem(CONSENT_KEY);
-      if (v === "granted" || v === "denied") setConsent(v);
-    } catch {
-      /* ignorar */
-    }
   }, []);
 
   useEffect(() => {
@@ -36,12 +48,12 @@ export function AnalyticsProvider({ ga4Id, metaPixelId }: { ga4Id: string | null
   }, [consent]);
 
   const decide = (v: "granted" | "denied") => {
-    setConsent(v);
     try {
       localStorage.setItem(CONSENT_KEY, v);
     } catch {
       /* ignorar */
     }
+    consentListeners.forEach((l) => l());
   };
 
   return (
@@ -56,12 +68,12 @@ export function AnalyticsProvider({ ga4Id, metaPixelId }: { ga4Id: string | null
         <Script id="meta-pixel" strategy="afterInteractive">{`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',${JSON.stringify(metaPixelId)});fbq('track','PageView');`}</Script>
       ) : null}
       {external && consent === null ? (
-        <div role="region" aria-label="Preferencias de medición" className="fixed inset-x-3 bottom-3 z-40 mx-auto max-w-xl rounded-2xl border border-borde bg-white p-4 text-sm shadow-lg sm:inset-x-auto sm:right-4">
+        <div role="region" aria-label="Preferencias de medición" className="fixed inset-x-3 top-20 z-40 mx-auto max-w-xl rounded-2xl border border-borde bg-white p-4 text-sm shadow-lg sm:inset-x-auto sm:top-auto sm:right-4 sm:bottom-4">
           <p className="text-tinta-suave">
             Usamos medición propia sin datos personales. ¿Nos permites también usar Google Analytics y Meta para medir campañas? Consulta el{" "}
-            <a className="link" href="/politicas/privacidad">
+            <Link className="link" href="/politicas/privacidad">
               aviso de privacidad
-            </a>
+            </Link>
             .
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
