@@ -54,7 +54,7 @@ export function CompareTable({ products, caption }: { products: PublicProduct[];
                 <td className="px-4 py-3">{numberText(p)}</td>
                 <td className="px-4 py-3 text-right">
                   <Link href={`/producto/${p.id}`} className="btn-primary min-h-10 px-4 text-sm whitespace-nowrap">
-                    Elegir este plan
+                    {p.linesPerUnit === 2 ? p.ctaLabel : "Elegir este plan"}
                   </Link>
                 </td>
               </tr>
@@ -91,7 +91,7 @@ export function CompareTable({ products, caption }: { products: PublicProduct[];
             </dl>
             {p.priceNote ? <p className="mt-2 text-xs font-semibold text-tinta-suave">{p.priceNote}</p> : null}
             <Link href={`/producto/${p.id}`} className="btn-primary mt-3 min-h-11 w-full text-sm">
-              Elegir este plan
+              {p.linesPerUnit === 2 ? p.ctaLabel : "Elegir este plan"}
             </Link>
           </li>
         ))}
