@@ -1,0 +1,95 @@
+{
+  "nota": "Archivo interno. Hashes SHA-256 de los originales entregados; se omiten rutas locales de procedencia.",
+  "archivos": [
+    {
+      "file": "assets-rincel/productos/rino-150-portabilidad.jpg",
+      "role": "rino-150-portabilidad",
+      "sha256": "2b8d5223987cd2f043b9e990e3fa867571ba0bfebbb77969643549a2b40fae22"
+    },
+    {
+      "file": "assets-rincel/productos/rino-230-portabilidad.jpg",
+      "role": "rino-230-portabilidad",
+      "sha256": "359a24c77fffdde7f6004c02d84f85f8d9f96950dbb4838d6d565fc4341018e5"
+    },
+    {
+      "file": "assets-rincel/productos/rino-230-portabilidad-2x1.jpg",
+      "role": "rino-230-portabilidad-2x1",
+      "sha256": "9ce899e4f96ae4c2351a137fcf74bda01b2130c831d780fe3ec7f8eadbf6e0fc"
+    },
+    {
+      "file": "assets-rincel/productos/rino-300-portabilidad.jpg",
+      "role": "rino-300-portabilidad",
+      "sha256": "47bf4a230e22d5df3de96ad725f588cdd0c599ab326522f6eb22fe05f199d6cc"
+    },
+    {
+      "file": "assets-rincel/productos/rino-230-linea-nueva.jpg",
+      "role": "rino-230-linea-nueva",
+      "sha256": "3fb8ed632b20491098c4bb0d04530f4f65f65f6d15703b1f6744fa297f8fd1c8"
+    },
+    {
+      "file": "assets-rincel/productos/rino-250-linea-nueva.jpg",
+      "role": "rino-250-linea-nueva",
+      "sha256": "8ccd6c7b5c08f90e1f063adb5b6c8396b2af9c869c67c3f5539460d07932dee7"
+    },
+    {
+      "file": "assets-rincel/productos/rino-300-linea-nueva.jpg",
+      "role": "rino-300-linea-nueva",
+      "sha256": "761c8a9e9522e560eccda84769fa2e870a68ae4773e76925ae09a4bad6e8286c"
+    },
+    {
+      "file": "assets-rincel/productos/chip-datos-10gb-7dias.jpg",
+      "role": "chip-datos-10gb-7dias",
+      "sha256": "89c033bbc9690cc345e2455743a5843aeea972d3495a492f0a7f46ca6239d803"
+    },
+    {
+      "file": "assets-rincel/productos/chip-datos-20gb-7dias.jpg",
+      "role": "chip-datos-20gb-7dias",
+      "sha256": "c76525dbb8ccac2a508750e348a0e4d6b3f79bb6e26688eccb1491222b0d3d13"
+    },
+    {
+      "file": "assets-rincel/productos/chip-datos-10gb-30dias.jpg",
+      "role": "chip-datos-10gb-30dias",
+      "sha256": "d17f33fa8606356001aa89b3c7a55fe2d20f011397e4db06857f791bb65ad3c5"
+    },
+    {
+      "file": "assets-rincel/productos/chip-datos-20gb-30dias.jpg",
+      "role": "chip-datos-20gb-30dias",
+      "sha256": "04053f18024d4b3af82f92b810838f9a8fbaa4fc00a15a7c833efd74bb5ef7f9"
+    },
+    {
+      "file": "assets-rincel/productos/mifi-rincel.jpg",
+      "role": "mifi-rincel",
+      "sha256": "bf8206aecfa4b49e47c26864ccd71e38efe3524d8aecb56f1b01fb83f4ea11f9"
+    },
+    {
+      "file": "assets-rincel/productos/kit-colaborador.jpg",
+      "role": "kit-colaborador",
+      "sha256": "53ec03b86aa7255d11135a3e36380a29a152544739ecc7bbb98d57ea9efdc769"
+    },
+    {
+      "file": "assets-rincel/marca/paleta-oficial.pdf",
+      "role": "Paleta oficial",
+      "sha256": "636bddd82dca1f9915d63dafb69d15a148a88977d1204a771ea79486097aa868"
+    },
+    {
+      "file": "assets-rincel/marca/logo-oficial.pdf",
+      "role": "Logo oficial del sitio",
+      "sha256": "e31cd6cbe8bea0ee5b40a2f775f1dfc4e674bb3704090a14e77917b1a3aa0bf8"
+    },
+    {
+      "file": "assets-rincel/mascota/rino.png",
+      "role": "Mascota principal",
+      "sha256": "506462523835af71382a828ae82025802d123c465119df1b74e193bf6d60d03a"
+    },
+    {
+      "file": "assets-rincel/mascota/perfiles-rino.png",
+      "role": "Referencia de identidad de la mascota",
+      "sha256": "4c882e9ca5c24c19f8a0763383882cb4e2a36021280fd5d0763ff1485ebafb12"
+    },
+    {
+      "file": "assets-rincel/productos/mifi-rincel-sin-texto.png",
+      "role": "Alternativa MiFi sin afirmación de conexiones",
+      "sha256": "dab37218fe3d4aad4e1abf0cb69f92ff6ef4300184be1a2b80655e28ecda8b58"
+    }
+  ]
+}

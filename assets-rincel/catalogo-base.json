@@ -1,0 +1,123 @@
+{
+  "currency": "MXN",
+  "products": [
+    {
+      "id": "rino-150-portabilidad",
+      "price_mxn": 150,
+      "data_gb": 12,
+      "validity_days": 30,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/rino-150-portabilidad.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "rino-230-portabilidad",
+      "price_mxn": 230,
+      "data_gb": 36,
+      "validity_days": 30,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/rino-230-portabilidad.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "rino-230-portabilidad-2x1",
+      "price_mxn": 230,
+      "data_gb": null,
+      "validity_days": null,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/rino-230-portabilidad-2x1.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "rino-300-portabilidad",
+      "price_mxn": 300,
+      "data_gb": 48,
+      "validity_days": 30,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/rino-300-portabilidad.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "rino-230-linea-nueva",
+      "price_mxn": 230,
+      "data_gb": 12,
+      "validity_days": 30,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/rino-230-linea-nueva.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "rino-250-linea-nueva",
+      "price_mxn": 250,
+      "data_gb": 15,
+      "validity_days": 30,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/rino-250-linea-nueva.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "rino-300-linea-nueva",
+      "price_mxn": 300,
+      "data_gb": 24,
+      "validity_days": 30,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/rino-300-linea-nueva.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "chip-datos-10gb-7dias",
+      "price_mxn": 140,
+      "data_gb": 10,
+      "validity_days": 7,
+      "social_data_gb": 1,
+      "image": "assets-rincel/productos/chip-datos-10gb-7dias.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "chip-datos-20gb-7dias",
+      "price_mxn": 180,
+      "data_gb": 20,
+      "validity_days": 7,
+      "social_data_gb": 1,
+      "image": "assets-rincel/productos/chip-datos-20gb-7dias.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "chip-datos-10gb-30dias",
+      "price_mxn": 230,
+      "data_gb": 10,
+      "validity_days": 30,
+      "social_data_gb": 3,
+      "image": "assets-rincel/productos/chip-datos-10gb-30dias.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "chip-datos-20gb-30dias",
+      "price_mxn": 340,
+      "data_gb": 20,
+      "validity_days": 30,
+      "social_data_gb": 3,
+      "image": "assets-rincel/productos/chip-datos-20gb-30dias.jpg",
+      "image_review_required": false
+    },
+    {
+      "id": "mifi-rincel",
+      "price_mxn": 1050,
+      "data_gb": null,
+      "validity_days": null,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/mifi-rincel.jpg",
+      "image_review_required": true
+    },
+    {
+      "id": "kit-colaborador",
+      "price_mxn": 350,
+      "data_gb": null,
+      "validity_days": null,
+      "social_data_gb": null,
+      "image": "assets-rincel/productos/kit-colaborador.jpg",
+      "image_review_required": false
+    }
+  ],
+  "note": "13 productos definidos; null significa pendiente o no aplica, no cero. Consultar PROMPT-CLAUDE.md para reglas completas. Las imágenes no sustituyen condiciones comerciales."
+}

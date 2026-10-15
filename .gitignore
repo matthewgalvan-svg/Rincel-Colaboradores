@@ -1,0 +1,27 @@
+# dependencias
+/node_modules
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# pruebas
+/coverage
+/playwright-report
+/test-results
+
+# entorno y secretos (nunca subir)
+.env
+.env.*
+!.env.example
+
+# almacenamiento privado local (guías, eSIM, comprobantes, cargas)
+/storage/*
+!/storage/.gitkeep
+
+# varios
+.DS_Store
+npm-debug.log*
+/storage-test/
